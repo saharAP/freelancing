@@ -6,7 +6,7 @@ import "./Owned.sol";
 
 /// @title A platform for eployers and freelancers
 /// @author Sahar A.Panahloo
-contract freelancing is Owned, Mortal{
+contract Freelancing is Owned, Mortal{
 using SafeMath for uint256;
 
 struct Project{
