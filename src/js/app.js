@@ -63,7 +63,9 @@ App = {
   },
 
   bindEvents: function() {
-    $(document).on('click', '.btn-action', App.handleAdopt);
+    $(document).on('click', '.btn-action', App.closeProject);
+    $(document).on('click', '.btn-action', App.pickProject);
+    $(document).on('click', '.btn-action', App.commitProject);
     $(document).on('click', '.btn-insert', App.insertProject);
   },
 
@@ -82,24 +84,33 @@ App = {
         projectsRow.empty();
       
       for (i = 0; i < projectNumbers; i++) {
+        prjTemplate = $('#prjTemplate');
         const result= await FreelancingInstance.returnProject.call(i);
         console.log(result[0]);
         const etherValue = web3.fromWei(result[2].toString(10), 'ether');
         prjTemplate.find('.project-price').text(etherValue);
         const status=result[3].toString(10);
-        
+        console.log("status:"+status)
         if(status==STATUS_CLOSED){
           prjTemplate.find('.project-status').text("Closed");
           prjTemplate.find('.btn-action').prop('disabled', true);
           prjTemplate.find('.btn-action').text("Closed");
+          
         }
         else if(status==STATUS_DONE){
+          prjTemplate.find('.btn-action').prop('disabled', false);
           prjTemplate.find('.project-status').text("Done");
           prjTemplate.find('.btn-action').text("Close");
+        
         }
         else if(status==STATUS_NOTDONE){  
-          petTemplate.find('.project-status').text("Not Done");
-          prjTemplate.find('.btn-action').text("Commit");
+          prjTemplate.find('.btn-action').prop('disabled', false);
+          prjTemplate.find('.project-status').text("Not Done");
+          prjTemplate.find('.btn-action').text("Commit");       
+        }else if(status==STATUS_OPEN){
+          prjTemplate.find('.btn-action').prop('disabled', false);
+          prjTemplate.find('.project-status').text("Open");
+          prjTemplate.find('.btn-action').text("Pick"); 
         }
         prjTemplate.find('.panel-title').text(result[0]);
         prjTemplate.find('.btn-action').attr('data-id', i);
@@ -133,19 +144,77 @@ App = {
         // Execute adopt as a transaction by sending account
         return freelancingInstance.addProject(projectName, {from: App.web3Provider.selectedAddress,value:weiprice});
       }).then(function(result) {
-      /*  var numprj=FreelancingInstance.numProjects.call();
-        var projectsRow = $('#projectsRow');
-        var prjTemplate = $('#prjTemplate');
-        prjTemplate.find('.project-price').text(price);
-        prjTemplate.find('.panel-title').text(projectName);
-        prjTemplate.find('.btn-action').attr('data-id', numprj-1);
-        projectsRow.append(prjTemplate.html());*/
+      
         return App.getProjects();
       }).catch(function(err) {
         console.log(err.message);
       });
   },
-  
+  pickProject: function(event) {
+    
+    event.preventDefault();
+    
+    if($(event.target).text()=="Pick"){
+    var projectId = parseInt($(event.target).data('id'));
+    console.log("projectId: "+projectId);
+ 
+    var freelancingInstance;
+
+      App.contracts.Freelancing.at(contract_address).then(function(instance) {
+        freelancingInstance = instance;
+
+        // Execute adopt as a transaction by sending account
+        return freelancingInstance.pickProject(projectId, {from: App.web3Provider.selectedAddress});
+      }).then(function(result) {
+   
+        return App.getProjects();
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    }
+  },
+commitProject: function(event) {
+    
+    event.preventDefault();
+if($(event.target).text()=="Commit"){
+    var projectId = parseInt($(event.target).data('id'));
+    console.log("projectId: "+projectId);
+    var freelancingInstance;
+
+      App.contracts.Freelancing.at(contract_address).then(function(instance) {
+        freelancingInstance = instance;
+
+        // Execute adopt as a transaction by sending account
+        return freelancingInstance.commitProject(projectId, {from: App.web3Provider.selectedAddress});
+      }).then(function(result) {
+   
+        return App.getProjects();
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    }
+  },
+  closeProject: function(event) {
+    
+    event.preventDefault();
+if($(event.target).text()=="Close"){
+    var projectId = parseInt($(event.target).data('id'));
+    console.log("projectId: "+projectId);
+    var freelancingInstance;
+
+      App.contracts.Freelancing.at(contract_address).then(function(instance) {
+        freelancingInstance = instance;
+
+        // Execute adopt as a transaction by sending account
+        return freelancingInstance.closeProject(projectId, {from: App.web3Provider.selectedAddress});
+      }).then(function(result) {
+   
+        return App.getProjects();
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    }
+  },
   markAdopters: function(adopters, account) {
     var FreelancingInstance;
 
