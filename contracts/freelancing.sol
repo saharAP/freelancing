@@ -3,10 +3,10 @@ pragma solidity ^0.5.0;
 
 import "./SafeMath.sol";
 import "./Owned.sol";
-
+import "./MasterSlave.sol";
 /// @title A platform for eployers and freelancers
 /// @author Sahar A.Panahloo
-contract Freelancing is Owned, Mortal{
+contract Freelancing is MasterSlave, Owned, Mortal{
 using SafeMath for uint256;
 
 bool public stopped=false;

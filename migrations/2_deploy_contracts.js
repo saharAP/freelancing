@@ -1,6 +1,9 @@
 var Freelancing = artifacts.require("./Freelancing.sol");
-
-module.exports = function(deployer) {
+var Proxy = artifacts.require("./Proxy.sol");
+module.exports =async  function(deployer) {
   
   deployer.deploy(Freelancing);
+  deployer.deploy(Proxy);
+
 };
+
