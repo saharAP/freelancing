@@ -4,10 +4,16 @@ pragma solidity ^0.5.0;
 import "./MasterSlave.sol";
 import "./freelancing.sol";
 
+/// @title Proxy
+/// @author Sahar A.Panahloo
 contract Proxy is MasterSlave{
 
 address private slave;
 
+/** @dev upgrade the logic contract by 
+* replacing the contract address with th Slave
+* state variable which the user points to
+*/
 function upgrade(address _slave) external{
     require(_slave!= address(0));
     slave=_slave;

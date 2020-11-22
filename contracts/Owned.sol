@@ -1,19 +1,21 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.5.0;
 
-/// @title Store the contract owner address 
+
+/// @title Owned
 /// @author Sahar A.Panahloo
 contract Owned{
     
     address payable public  owner;
     
+     /// @notice Store the contract owner address
     function owned() public {
         
         owner=msg.sender;
     }
     
 }
-/// @title Destroy the smart contract when needed by the owner
+/// @title Mortal
 /// @author Sahar A.Panahloo
 contract Mortal is Owned{
     

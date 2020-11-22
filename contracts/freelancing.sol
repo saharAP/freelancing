@@ -1,10 +1,14 @@
 //SPDX-License-Identifier: MIT
+
+/** This is a platform for employers and freelancers*/
+
 pragma solidity ^0.5.0;
 
 import "./SafeMath.sol";
 import "./Owned.sol";
 import "./MasterSlave.sol";
-/// @title A platform for eployers and freelancers
+
+/// @title Freelancing
 /// @author Sahar A.Panahloo
 contract Freelancing is MasterSlave, Owned, Mortal{
 using SafeMath for uint256;

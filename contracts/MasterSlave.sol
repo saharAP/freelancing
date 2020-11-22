@@ -1,6 +1,9 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.5.0;
 
+/// @title Master/Slave 
+///@notice Master/Slave design pattern for making the freelancing contract upgradable
+/// @author Sahar A.Panahloo
 interface MasterSlave{
 
 function breakCircuit(bool _stopped)        external    ;
