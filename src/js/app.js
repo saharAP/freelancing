@@ -1,4 +1,6 @@
 var contract_address = '0xC64Cce600BCf762e495b7a0B9E4c296E3108D794'
+//var contract_address='0xb0C365e45446100BfdC4c6b62AAAbce4b63F4730'
+
 const STATUS_OPEN =3;
 const STATUS_DONE =0;
 const STATUS_NOTDONE =1;
@@ -7,7 +9,7 @@ App = {
   web3Provider: null,
   contracts: {},
 
-  
+ 
 
   init: async function() {
     console.log("init func!");
@@ -17,12 +19,21 @@ App = {
   initWeb3: async function() {
     // Modern dapp browsers...
     if (window.ethereum) {
+      var ethaccount = $('#ethaccount');
+
       console.log("window.ethereum!");
       App.web3Provider = window.ethereum;
       try {
         // Request account access
         await window.ethereum.enable();
         console.log("web3 initialized!");
+        ethaccount.text("Ethereum Account: "+App.web3Provider.selectedAddress)
+        window.ethereum.on('accountsChanged', function (accounts) {
+          // Time to reload your interface with accounts[0]!
+          ethaccount.text("Current Ethereum Account: "+App.web3Provider.selectedAddress)
+        });
+
+
       } catch (error) {
         // User denied account access...
         console.error("User denied account access")
