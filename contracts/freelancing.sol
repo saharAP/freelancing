@@ -87,12 +87,10 @@ function closeProject(uint _id)public payable done(_id) verifyCaller(projects[_i
 
 projects[_id].status=Status.Closed;
 (bool success, )=projects[_id].freelancer.call.value(projects[_id].price)("");
-if(!success) {
-    // handle failure code
-  projects[_id].status=Status.Done;  
-}else{
+require (success);
+ 
 emit CloseProject(_id,projects[_id].employer,projects[_id].freelancer,projects[_id].price);
-}
+
 }
 
 /// @notice Get the project specifications
