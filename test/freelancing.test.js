@@ -32,10 +32,10 @@ contract('Freelancing', function(accounts) {
         const result = await instance.returnProject.call(id)
 
         assert.equal(result[0], name, 'the name of the last added item does not match the expected value')
-        assert.equal(result[2].toString(10), price, 'the price of the last added project should equal to the value which is sent')
-        assert.equal(result[3].toString(10), status_Open, 'the state of the recently added project should be "Open"')
-        assert.equal(result[4], employer, 'the address adding the project should be listed as the employer')
-        assert.equal(result[5], zeroAddress, 'the freelancer address should be set to 0 when a project is added')
+        assert.equal(result[2].toString(10), price, 'the price of the last added project does not equal to the value which is sent')
+        assert.equal(result[3].toString(10), status_Open, 'the state of the recently added project is not "Open"')
+        assert.equal(result[4], employer, 'the address adding the project does not listed as the employer')
+        assert.equal(result[5], zeroAddress, 'the freelancer address does not set to 0 when a project is added')
     })
 
     it("should emit an AddProject event when a project is added", async()=> {
@@ -46,7 +46,7 @@ contract('Freelancing', function(accounts) {
             eventEmitted = true
         }
 
-        assert.equal(eventEmitted, true, 'adding a project should emit an add project event')
+        assert.equal(eventEmitted, true, 'adding a project does not emit an add project event')
     })
     it("should change the status of the project to Not Done when picking the project", async() => {
         var tx = await instance.addProject(name,{from: employer,value:price})
@@ -54,8 +54,8 @@ contract('Freelancing', function(accounts) {
         tx = await instance.pickProject(id,{from: alice})
         const result = await instance.returnProject.call(id)
 
-        assert.equal(result[5], alice, 'the freelancer address should be set to alice when she pick a project')
-        assert.equal(result[3].toString(10), status_NotDone, 'the status of the recently picked project should be "NotDone"')
+        assert.equal(result[5], alice, 'the freelancer address does not set to alice when she pick a project')
+        assert.equal(result[3].toString(10), status_NotDone, 'the status of the recently picked project is not "NotDone"')
     })
     it("should change the status of the project to Done when committing the project", async() => {
         var tx = await instance.addProject(name,{from: employer,value:price})
@@ -65,7 +65,7 @@ contract('Freelancing', function(accounts) {
 
         const result = await instance.returnProject.call(id)
 
-        assert.equal(result[3].toString(10), status_Done, 'the status of the commited project should be "Done"')
+        assert.equal(result[3].toString(10), status_Done, 'the status of the commited project is not "Done"')
     })
     it("should allow the employer to close the commited project and send the price to the freelancer accordingly", async() => {
 
@@ -84,7 +84,7 @@ contract('Freelancing', function(accounts) {
 
         const result = await instance.returnProject.call(id)
 
-        assert.equal(result[3].toString(10), status_Closed, 'the status of the project should be "Closed"')
+        assert.equal(result[3].toString(10), status_Closed, 'the status of the project is not "Closed"')
         assert.equal(new BN(aliceBalanceAfter).toString(), new BN(aliceBalanceBefore).add(new BN(price)).toString(), "alice's balance should be increased by the price of the project")
     })
     it("should emit an CloseProject event when a project is closed by the employer", async()=> {
@@ -98,7 +98,7 @@ contract('Freelancing', function(accounts) {
             eventEmitted = true
         }
 
-        assert.equal(eventEmitted, true, 'closing a project should emit a close project event')
+        assert.equal(eventEmitted, true, 'closing a project does not emit a close project event')
     })
 
 
