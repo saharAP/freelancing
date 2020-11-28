@@ -1,5 +1,7 @@
-var contract_address = '0xC64Cce600BCf762e495b7a0B9E4c296E3108D794'
-//var contract_address='0xb0C365e45446100BfdC4c6b62AAAbce4b63F4730'
+/**Freelancing smart contract deployed on ropsten test network */
+
+//var contract_address = '0xC64Cce600BCf762e495b7a0B9E4c296E3108D794'
+var contract_address="0xe00145e22b21d4eecA656b1FeAaF5e878c18B318"
 
 const STATUS_OPEN =3;
 const STATUS_DONE =0;
@@ -27,10 +29,13 @@ App = {
         // Request account access
         await window.ethereum.enable();
         console.log("web3 initialized!");
-        ethaccount.text("Ethereum Account: "+App.web3Provider.selectedAddress)
+        
+        const currentAddr=App.web3Provider.selectedAddress;
+        
+        ethaccount.text(currentAddr);
         window.ethereum.on('accountsChanged', function (accounts) {
           // Time to reload your interface with accounts[0]!
-          ethaccount.text("Current Ethereum Account: "+App.web3Provider.selectedAddress)
+          ethaccount.text(App.web3Provider.selectedAddress)
         });
 
 
@@ -49,7 +54,7 @@ App = {
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     }
     web3 = new Web3(App.web3Provider);
-
+    console.log("web31111111111");
     return App.initContract();
   },
 
@@ -62,10 +67,11 @@ App = {
      
       App.contracts.Freelancing = TruffleContract(FreelancingArtifact);
      // App.contracts.Freelancing.at(contract_address);
-      
+      console.log("web3222222222222222");
       // Set the provider for our contract
       App.contracts.Freelancing.setProvider(App.web3Provider);
       console.log(App.web3Provider.selectedAddress);
+      console.log("web333333333333333333333");
       // Use our contract to retrieve and mark the adopted pets
       return App.getProjects();
     });
@@ -82,10 +88,10 @@ App = {
 
   getProjects: function(projectNumbers, account) {
     var FreelancingInstance;
-
+    console.log("web3444444444444444444");
     App.contracts.Freelancing.at(contract_address).then(function(instance) {
       FreelancingInstance = instance;
-      
+ 
       return FreelancingInstance.numProjects.call();
     }).then(async function(projectNumbers) {
       console.log("numProjects: "+projectNumbers);
@@ -93,7 +99,7 @@ App = {
       var prjTemplate = $('#prjTemplate');
     
         projectsRow.empty();
-      
+        console.log("web35555555555555555555555555");
       for (i = 0; i < projectNumbers; i++) {
         prjTemplate = $('#prjTemplate');
         const result= await FreelancingInstance.returnProject.call(i);
