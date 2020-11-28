@@ -3,7 +3,7 @@ The freelancing platform is a decentralized platform on the Ethereum Blockchain 
 
 ## Story
 
- An employer adds a project with a name and a price. The newly created project's status is Open. The employer also sends the price in Ether to the smart contract as a guarantee. Every freelancer could pick a project with the status Open. As the freelancer pick the project, its status changes to Not Done. After completing the project, the freelancer could commit the project, and its status changes to Done. If the employer verifies the project with closing it, the smart contract sends the price to the freelancer, and the project's status will change to Close. 
+ An employer adds a project including a name and a price. The newly created project's status is Open. The employer also sends the price in Ether to the smart contract as a guarantee. A freelancer could pick a project with the status Open. As the freelancer picks the project, the project's status changes to Not Done. After completing the project, the freelancer could commit the project, and the project's status changes to Done. If the employer verifies the project by closing it, the smart contract will send the price to the freelancer, and the project's status will change to Close.
 
 ## Dependencies
 ### truffle
@@ -49,6 +49,11 @@ truffle test
  ```
  npm start
  ```
+ Also the web interface is hosted on IPFS network and you can access it through the bellow link.
+ 
+ https://ipfs.io/ipfs/QmS4CA1WdwMffRCBdgceUnk7ChYcmbsnr5zAYqor46HaKo/
+
+ 
 
  
 
