@@ -49,7 +49,7 @@ truffle test
  ```
  npm start
  ```
- Also the web interface is hosted on IPFS network and you can access it through the bellow link.
+ Also the web interface is hosted on [IPFS](https://ipfs.io/) network and you can access it through the bellow link.
  
  https://ipfs.io/ipfs/QmS4CA1WdwMffRCBdgceUnk7ChYcmbsnr5zAYqor46HaKo/
 
